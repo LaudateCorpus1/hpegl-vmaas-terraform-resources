@@ -19,7 +19,6 @@ func NewRouterValidate(diff *schema.ResourceDiff) *Router {
 }
 
 func (r *Router) DiffValidate() error {
-
 	err := r.validateTier0Config()
 	if err != nil {
 		return err
@@ -29,7 +28,6 @@ func (r *Router) DiffValidate() error {
 }
 
 func (r *Router) validateTier0Config() error {
-
 	// BGP inter SR routing only applicable for Tier0 in active-active HA-mode
 	haModePath := "tier0_config.0.ha_mode"
 	interSRiBGPPath := "tier0_config.0.bgp.0.inter_sr_ibgp"
@@ -50,9 +48,10 @@ func (r *Router) validateTier0Config() error {
 		}
 	}
 
-	//BGP graceful restart timers cannot be updated when BGP config is enabled
+	// BGP graceful restart timers cannot be updated when BGP config is enabled
 	bgpEnabledPath := "tier0_config.0.bgp.0.enable_bgp"
-	if r.diff.HasChange(bgpEnabledPath) || r.diff.HasChange("tier0_config.0.bgp.0.restart_time") || r.diff.HasChange("tier0_config.0.bgp.0.stale_route_time") {
+	if r.diff.HasChange(bgpEnabledPath) || r.diff.HasChange(
+		"tier0_config.0.bgp.0.restart_time") || r.diff.HasChange("tier0_config.0.bgp.0.stale_route_time") {
 		action := r.diff.Get(bgpEnabledPath)
 		if action.(bool) {
 			if r.diff.HasChange("tier0_config.0.bgp.0.restart_time") || r.diff.HasChange("tier0_config.0.bgp.0.stale_route_time") {
