@@ -1,4 +1,4 @@
-// (C) Copyright 2021 Hewlett Packard Enterprise Development LP
+// (C) Copyright 2021-2022 Hewlett Packard Enterprise Development LP
 
 package cmp
 
@@ -16,10 +16,12 @@ const (
 	nameKey          = "name"
 	maxKey           = "max"
 	externalNameKey  = "externalName"
+	filterTypeKey    = "filterType"
 	// retry related constants
 	maxTimeout = time.Hour * 2
 	// router consts
 	tier0GatewayType             = "NSX-T Tier-0 Gateway"
 	tier1GatewayType             = "NSX-T Tier-1 Gateway"
 	routerFirewallExternalPolicy = "GatewayPolicy"
+	syncedTypeValue              = "Synced"
 )

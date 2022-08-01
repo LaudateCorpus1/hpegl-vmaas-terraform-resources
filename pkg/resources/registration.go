@@ -1,4 +1,4 @@
-// (C) Copyright 2021 Hewlett Packard Enterprise Development LP
+// (C) Copyright 2021-2022 Hewlett Packard Enterprise Development LP
 
 package resources
 
@@ -40,19 +40,25 @@ func (r Registration) SupportedDataSources() map[string]*schema.Resource {
 		resources.DSNetworkProxy:     resources.NetworkProxyData(),
 		resources.DSEdgeCluster:      resources.EdgeClusterData(),
 		resources.DSTransportZone:    resources.TransportZoneData(),
+		resources.DSLoadBalancer:     resources.LoadBalancerData(),
 	}
 }
 
 func (r Registration) SupportedResources() map[string]*schema.Resource {
 	return map[string]*schema.Resource{
-		resources.ResInstance:                resources.Instances(),
-		resources.ResInstanceClone:           resources.InstancesClone(),
-		resources.ResNetwork:                 resources.Network(),
-		resources.ResRouter:                  resources.Router(),
-		resources.ResRouterNat:               resources.RouterNatRule(),
-		resources.ResRouterFirewallRuleGroup: resources.RouterFirewallRuleGroup(),
-		resources.ResRouterRoute:             resources.RouterRoute(),
-		resources.ResRouterBgpNeighbor:       resources.RouterBgpNeighbor(),
+		resources.ResInstance:                   resources.Instances(),
+		resources.ResInstanceClone:              resources.InstancesClone(),
+		resources.ResNetwork:                    resources.Network(),
+		resources.ResRouter:                     resources.Router(),
+		resources.ResRouterNat:                  resources.RouterNatRule(),
+		resources.ResRouterFirewallRuleGroup:    resources.RouterFirewallRuleGroup(),
+		resources.ResRouterRoute:                resources.RouterRoute(),
+		resources.ResRouterBgpNeighbor:          resources.RouterBgpNeighbor(),
+		resources.ResLoadBalancer:               resources.LoadBalancer(),
+		resources.ResLoadBalancerMonitors:       resources.LoadBalancerMonitor(),
+		resources.ResLoadBalancerProfiles:       resources.LoadBalancerProfiles(),
+		resources.ResLoadBalancerPools:          resources.LoadBalancerPools(),
+		resources.ResLoadBalancerVirtualServers: resources.LoadBalancerVirtualServers(),
 	}
 }
 
@@ -70,6 +76,12 @@ func (r Registration) ProviderSchemaEntry() *schema.Resource {
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("HPEGL_VMAAS_SPACE_NAME", ""),
 				Description: "IAM Space name of the GL VMaaS Service, can also be set with the HPEGL_VMAAS_SPACE_NAME env var.",
+			},
+			constants.APIURL: {
+				Type:        schema.TypeString,
+				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("HPEGL_VMAAS_API_URL", constants.ServiceURL),
+				Description: "The URL to use for the VMaaS API, can also be set with the HPEGL_VMAAS_API_URL env var",
 			},
 		},
 	}

@@ -24,7 +24,7 @@ func getAPIClient() (*api_client.APIClient, api_client.Configuration) {
 	}
 
 	cfg := api_client.Configuration{
-		Host:          utils.GetServiceEndpoint(),
+		Host: os.Getenv("HPEGL_VMAAS_API_URL"),
 		DefaultHeader: headers,
 		DefaultQueryParams: map[string]string{
 			constants.LocationKey: os.Getenv("HPEGL_VMAAS_LOCATION"),
@@ -63,7 +63,6 @@ func getAPIClient() (*api_client.APIClient, api_client.Configuration) {
 			*ctx = context.WithValue(*ctx, api_client.ContextAccessToken, token)
 		}
 	})
-
 	if err != nil {
 		log.Printf("[WARN] Error: %s", err)
 	}

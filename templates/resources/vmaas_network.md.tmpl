@@ -1,6 +1,7 @@
 ---
 layout: ""
 page_title: "hpegl_vmaas_network Resource - vmaas-terraform-resources"
+subcategory: {{ $arr := split .Name "_" }}"{{ index $arr 1 }}"
 description: |-
   {{ .Description | plainmarkdown | trimspace | prefixlines "  " }}
 ---
@@ -11,8 +12,9 @@ description: |-
 
 {{ .Description | trimspace }}
 `hpegl_vmaas_network` resource supports NSX-T network creation.
+For more information, see [Private cloud networking using VMware NSX-T](https://www.hpe.com/info/HPE-GreenLake-private-cloud-networking).
 
-For creating an NSX-T network please refer following examples.
+For creating an NSX-T network, see the following examples.
 
 ## Example usage for creating NSX-T Network with all possible attributes
 
@@ -20,5 +22,11 @@ For creating an NSX-T network please refer following examples.
 
 -> Transport Zone Data Source `hpegl_vmaas_transport_zone` which is used for the
 `scope_id` is supported from 5.2.13.
+
+-> Currently there is a support for Static NSX-T Network. DHCP based NSX-T Network is not supported yet.
+
+~> There is an open issue with the Network Resource in 5.4.4 where it does not attach the provided IP pools.
+This issue is already fixed in the later versions and will be released soon. For time being we are recommending manually
+updating the IP pool from UI.
 
 {{ .SchemaMarkdown | trimspace }}
